@@ -6,7 +6,22 @@ type AggregateUser {
   count: Int!
 }
 
+type BatchPayload {
+  count: Long!
+}
+
 scalar DateTime
+
+scalar Long
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteUser(where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
 
 interface Node {
   id: ID!
@@ -20,6 +35,7 @@ type PageInfo {
 }
 
 type Query {
+  helloWorld: String!
   node(id: ID!): Node
   user(where: UserWhereUniqueInput!): User
   users(after: String, before: String, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int, where: UserWhereInput): [User!]!
@@ -36,8 +52,6 @@ type User {
   email: String!
   id: ID!
   name: String
-  password: String!
-  role: Role!
   updatedAt: DateTime!
 }
 
@@ -45,6 +59,13 @@ type UserConnection {
   aggregate: AggregateUser!
   edges: [UserEdge!]!
   pageInfo: PageInfo!
+}
+
+input UserCreateInput {
+  email: String!
+  name: String
+  password: String!
+  role: Role
 }
 
 type UserEdge {
@@ -67,6 +88,20 @@ enum UserOrderByInput {
   role_DESC
   updatedAt_ASC
   updatedAt_DESC
+}
+
+input UserUpdateInput {
+  email: String
+  name: String
+  password: String
+  role: Role
+}
+
+input UserUpdateManyMutationInput {
+  email: String
+  name: String
+  password: String
+  role: Role
 }
 
 input UserWhereInput {

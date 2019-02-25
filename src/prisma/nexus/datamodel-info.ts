@@ -3,6 +3,7 @@ export default {
     User: ['id', 'email'],
     Role: []
   },
+  clientPath: '/Users/mj/Dev/wip/nestjs-prisma-nexus-test/src/prisma/client',
   schema: {
   "__schema": {
     "queryType": {

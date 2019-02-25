@@ -11,6 +11,24 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  UserCreateInput: { // input type
+    email: string; // String!
+    name?: string | null; // String
+    password: string; // String!
+    role?: NexusGenEnums['Role'] | null; // Role
+  }
+  UserUpdateInput: { // input type
+    email?: string | null; // String
+    name?: string | null; // String
+    password?: string | null; // String
+    role?: NexusGenEnums['Role'] | null; // Role
+  }
+  UserUpdateManyMutationInput: { // input type
+    email?: string | null; // String
+    name?: string | null; // String
+    password?: string | null; // String
+    role?: NexusGenEnums['Role'] | null; // Role
+  }
   UserWhereInput: { // input type
     AND?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
     createdAt?: any | null; // DateTime
@@ -107,6 +125,10 @@ export interface NexusGenRootTypes {
   AggregateUser: { // root type
     count: number; // Int!
   }
+  BatchPayload: { // root type
+    count: any; // Long!
+  }
+  Mutation: {};
   PageInfo: { // root type
     endCursor?: string | null; // String
     hasNextPage: boolean; // Boolean!
@@ -119,7 +141,6 @@ export interface NexusGenRootTypes {
     email: string; // String!
     id: string; // ID!
     name?: string | null; // String
-    password: string; // String!
     updatedAt: any; // DateTime!
   }
   UserConnection: { // root type
@@ -137,9 +158,13 @@ export interface NexusGenRootTypes {
   Boolean: boolean;
   ID: string;
   DateTime: any;
+  Long: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  UserCreateInput: NexusGenInputs['UserCreateInput'];
+  UserUpdateInput: NexusGenInputs['UserUpdateInput'];
+  UserUpdateManyMutationInput: NexusGenInputs['UserUpdateManyMutationInput'];
   UserWhereInput: NexusGenInputs['UserWhereInput'];
   UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
   Role: NexusGenEnums['Role'];
@@ -150,6 +175,17 @@ export interface NexusGenFieldTypes {
   AggregateUser: { // field return type
     count: number; // Int!
   }
+  BatchPayload: { // field return type
+    count: any; // Long!
+  }
+  Mutation: { // field return type
+    createUser: NexusGenRootTypes['User']; // User!
+    deleteManyUsers: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    deleteUser: NexusGenRootTypes['User'] | null; // User
+    updateManyUsers: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    updateUser: NexusGenRootTypes['User'] | null; // User
+    upsertUser: NexusGenRootTypes['User']; // User!
+  }
   PageInfo: { // field return type
     endCursor: string | null; // String
     hasNextPage: boolean; // Boolean!
@@ -157,6 +193,7 @@ export interface NexusGenFieldTypes {
     startCursor: string | null; // String
   }
   Query: { // field return type
+    helloWorld: string; // String!
     node: NexusGenRootTypes['Node'] | null; // Node
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
@@ -167,8 +204,6 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     id: string; // ID!
     name: string | null; // String
-    password: string; // String!
-    role: NexusGenEnums['Role']; // Role!
     updatedAt: any; // DateTime!
   }
   UserConnection: { // field return type
@@ -186,6 +221,30 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createUser: { // args
+      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    }
+    deleteManyUsers: { // args
+      where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    }
+    deleteUser: { // args
+      where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
+    }
+    updateManyUsers: { // args
+      data: NexusGenInputs['UserUpdateManyMutationInput']; // UserUpdateManyMutationInput!
+      where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    }
+    updateUser: { // args
+      data: NexusGenInputs['UserUpdateInput']; // UserUpdateInput!
+      where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
+    }
+    upsertUser: { // args
+      create: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+      update: NexusGenInputs['UserUpdateInput']; // UserUpdateInput!
+      where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
+    }
+  }
   Query: {
     node: { // args
       id: string; // ID!
@@ -219,15 +278,15 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AggregateUser" | "PageInfo" | "Query" | "User" | "UserConnection" | "UserEdge";
+export type NexusGenObjectNames = "AggregateUser" | "BatchPayload" | "Mutation" | "PageInfo" | "Query" | "User" | "UserConnection" | "UserEdge";
 
-export type NexusGenInputNames = "UserWhereInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "UserCreateInput" | "UserUpdateInput" | "UserUpdateManyMutationInput" | "UserWhereInput" | "UserWhereUniqueInput";
 
 export type NexusGenEnumNames = "Role" | "UserOrderByInput";
 
 export type NexusGenInterfaceNames = "Node";
 
-export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "Long" | "String";
 
 export type NexusGenUnionNames = never;
 

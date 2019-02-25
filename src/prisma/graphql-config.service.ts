@@ -13,11 +13,32 @@ export class GraphqlConfigService implements GqlOptionsFactory {
             name: 'Query',
             definition(t) {
                 t.prismaFields(['*'])
+
+                t.field('helloWorld', {
+                    type: 'String',
+                    resolve: (_, { id }, ctx) =>{
+                        return 'Hello Marc'
+                    }
+                });
             }
         });
 
+        const user = prismaObjectType({
+            name: 'User',
+            definition(t) {
+                t.prismaFields(['id', 'createdAt', 'updatedAt', 'name', 'email'])
+            }
+        })
+
+        const Mutation = prismaObjectType({
+            name: 'Mutation',
+            definition(t) {
+                t.prismaFields(['*'])
+            }
+        })
+
         const schema = makePrismaSchema({
-            types: [Query],
+            types: [Query, user, Mutation],
 
             prisma: {
                 datamodelInfo,
