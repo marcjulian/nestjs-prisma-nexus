@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
 import { makePrismaSchema, prismaObjectType } from 'nexus-prisma';
 import * as path from 'path';
-import { prisma } from './client';
-import datamodelInfo from './nexus/datamodel-info';
+import { prisma } from '../generated/prisma-client';
+import datamodelInfo from '../generated/nexus-prisma/datamodel-info';
 
 @Injectable()
 export class GraphqlConfigService implements GqlOptionsFactory {
@@ -17,7 +17,7 @@ export class GraphqlConfigService implements GqlOptionsFactory {
                 t.field('helloWorld', {
                     type: 'String',
                     resolve: (_, { id }, ctx) =>{
-                        return 'Hello Marc'
+                        return 'Hello World'
                     }
                 });
             }
@@ -46,8 +46,8 @@ export class GraphqlConfigService implements GqlOptionsFactory {
             },
 
             outputs: {
-                schema: path.join(__dirname, './schema.graphql'),
-                typegen: path.join(__dirname, './nexus.ts'),
+                schema: path.join(__dirname, '../generated/schema.graphql'),
+                typegen: path.join(__dirname, '../generated/nexus.ts'),
             },
         });
 

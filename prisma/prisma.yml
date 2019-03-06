@@ -6,13 +6,13 @@ datamodel: datamodel.prisma
 # Specifies the language and directory for the generated Prisma client.
 generate:
   - generator: typescript-client
-    output: ../src/prisma/client/
+    output: ../src/generated/prisma-client/
 
 # Ensures Prisma client is re-generated after a datamodel change.
 hooks:
   post-deploy:
     - prisma generate
-    - npx nexus-prisma-generate --client ./src/prisma/client/ --output ./src/prisma/nexus
+    - npx nexus-prisma-generate --client ./src/generated/prisma-client/ --output ./src/generated/nexus-prisma
 
 # Seeds initial data into the database by running a script.
 seed:
